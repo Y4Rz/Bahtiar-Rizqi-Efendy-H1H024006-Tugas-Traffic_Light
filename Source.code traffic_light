@@ -1,0 +1,48 @@
+int U_M = 2, U_K = 3, U_H = 4;
+int T_M = 5, T_K = 6, T_H = 7;
+int S_M = 8, S_K = 9, S_H = 10;
+int B_M = 11, B_K = 12, B_H = 13;
+
+int hijau = 5000;
+int delayKedip = 300;
+
+void SemuaMerah() {
+  digitalWrite(U_M, HIGH); digitalWrite(U_K, LOW); digitalWrite(U_H, LOW);
+  digitalWrite(T_M, HIGH); digitalWrite(T_K, LOW); digitalWrite(T_H, LOW);
+  digitalWrite(S_M, HIGH); digitalWrite(S_K, LOW); digitalWrite(S_H, LOW);
+  digitalWrite(B_M, HIGH); digitalWrite(B_K, LOW); digitalWrite(B_H, LOW);
+}
+
+void kuningKedip(int pinKuning) {
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(pinKuning, HIGH);
+    delay(delayKedip);
+    digitalWrite(pinKuning, LOW);
+    delay(delayKedip);
+  }
+}
+
+void AktifSimpang(int M, int K, int H) {
+  SemuaMerah();
+  digitalWrite(M, LOW);
+  digitalWrite(H, HIGH);
+  delay(hijau);
+
+  digitalWrite(H, LOW);
+  kuningKedip(K);
+  digitalWrite(M, HIGH);
+}
+
+void setup() {
+  for (int i = 2; i <= 13; i++) {
+    pinMode(i, OUTPUT);
+  }
+  SemuaMerah();
+}
+
+void loop() {
+  AktifSimpang(U_M, U_K, U_H);
+  AktifSimpang(T_M, T_K, T_H);
+  AktifSimpang(S_M, S_K, S_H);
+  AktifSimpang(B_M, B_K, B_H);
+}
