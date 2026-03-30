@@ -1,48 +1,88 @@
+// DEKLARASI PIN SETIAP ARAH
+
+// UTARA
 int U_M = 2, U_K = 3, U_H = 4;
+
+// TIMUR
 int T_M = 5, T_K = 6, T_H = 7;
+
+// SELATAN
 int S_M = 8, S_K = 9, S_H = 10;
+
+// BARAT
 int B_M = 11, B_K = 12, B_H = 13;
 
-int hijau = 5000;
-int delayKedip = 300;
+
+// PENGATURAN WAKTU
+
+int hijau = 5000;        
+int delayKedip = 300;    
+
+
+// FUNGSI SEMUA MERAH
 
 void SemuaMerah() {
+  // Menyalakan semua lampu merah
   digitalWrite(U_M, HIGH); digitalWrite(U_K, LOW); digitalWrite(U_H, LOW);
   digitalWrite(T_M, HIGH); digitalWrite(T_K, LOW); digitalWrite(T_H, LOW);
   digitalWrite(S_M, HIGH); digitalWrite(S_K, LOW); digitalWrite(S_H, LOW);
   digitalWrite(B_M, HIGH); digitalWrite(B_K, LOW); digitalWrite(B_H, LOW);
+
+  // HIGH = nyala untuk merah
+  // LOW = mati untuk kuning & hijau
 }
 
+// FUNGSI KUNING BERKEDIP
+
 void kuningKedip(int pinKuning) {
+  // Mengulang 3 kali kedipan
   for (int i = 0; i < 3; i++) {
-    digitalWrite(pinKuning, HIGH);
-    delay(delayKedip);
-    digitalWrite(pinKuning, LOW);
-    delay(delayKedip);
+
+    digitalWrite(pinKuning, HIGH); 
+    delay(delayKedip);             
+
+    digitalWrite(pinKuning, LOW);  
+    delay(delayKedip);             
   }
 }
 
-void AktifSimpang(int M, int K, int H) {
-  SemuaMerah();
-  digitalWrite(M, LOW);
-  digitalWrite(H, HIGH);
-  delay(hijau);
+// FUNGSI AKTIFKAN SATU SIMPANG
 
-  digitalWrite(H, LOW);
-  kuningKedip(K);
-  digitalWrite(M, HIGH);
+void AktifSimpang(int M, int K, int H) {
+
+  SemuaMerah(); 
+
+  digitalWrite(M, LOW);   
+  digitalWrite(H, HIGH);  
+  delay(hijau);          
+
+  digitalWrite(H, LOW);   
+  kuningKedip(K);         
+
+  digitalWrite(M, HIGH);  
 }
 
+// SETUP (DIJALANKAN SEKALI)
+
 void setup() {
+
   for (int i = 2; i <= 13; i++) {
     pinMode(i, OUTPUT);
   }
+
   SemuaMerah();
 }
 
+// LOOP 
+
 void loop() {
-  AktifSimpang(U_M, U_K, U_H);
-  AktifSimpang(T_M, T_K, T_H);
-  AktifSimpang(S_M, S_K, S_H);
-  AktifSimpang(B_M, B_K, B_H);
+
+  // Urutan lampu lalu lintas:
+  // Utara → Timur → Selatan → Barat
+
+  AktifSimpang(U_M, U_K, U_H); 
+  AktifSimpang(T_M, T_K, T_H); 
+  AktifSimpang(S_M, S_K, S_H); 
+  AktifSimpang(B_M, B_K, B_H); 
+
 }
